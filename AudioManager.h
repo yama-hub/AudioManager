@@ -11,22 +11,31 @@
 
 + (AudioManager *)sharedManager;
 
+- (void)stopPlayers;
+- (void)removePlayer:(AVAudioPlayer *)player;
+
 - (AVAudioPlayer *)playerWithURL:(NSURL *)url
-                        complete:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))complete
+                         success:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))success
                          failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
 
 - (AVAudioPlayer *)playerWithPath:(NSString *)path
-                         complete:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))complete
+                          success:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))success
                           failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
 
 - (void)playerWithURL:(NSURL *)url
-                         success:(void(^)(AVAudioPlayer *audioPlayer))success
-                        complete:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))complete
-                         failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
+              prepare:(void(^)(AVAudioPlayer *audioPlayer))prepare
+              success:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))success
+              failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
 
 - (void)playerWithPath:(NSString *)path
-               success:(void(^)(AVAudioPlayer *audioPlayer))success
-              complete:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))complete
+               prepare:(void(^)(AVAudioPlayer *audioPlayer))prepare
+               success:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))success
                failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
+
+- (void)playerContinuousWithPath:(NSArray *)paths
+                         prepare:(void(^)(AVAudioPlayer *audioPlayer))prepare
+                         process:(void(^)(AVAudioPlayer *audioPlayer, NSString *path, BOOL *stop))process
+                         success:(void(^)(AVAudioPlayer *audioPlayer, BOOL isSuccessfully))success
+                         failure:(void(^)(AVAudioPlayer *audioPlayer, NSError *error))failure;
 
 @end
